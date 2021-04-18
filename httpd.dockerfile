@@ -1,4 +1,4 @@
-FROM php:7.4-apache
+FROM php:8-apache
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
@@ -9,9 +9,9 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     rsync \
     git \
-    zip
+    libzip-dev
 
-RUN docker-php-ext-install pdo pdo_mysql mysqli
+RUN docker-php-ext-install pdo pdo_mysql mysqli zip
 RUN docker-php-ext-configure gd --with-jpeg
 RUN docker-php-ext-install gd
 

@@ -90,7 +90,7 @@ services:
       - 8081:80
 
   composer:
-    image: composer:latest
+    image: composer:2
     container_name: composer
     volumes:
       - ./site:/var/www/html
@@ -115,6 +115,7 @@ services:
     container_name: artisan
     volumes:
       - ./site:/var/www/html
+      # - /path/to/stonish/:/stonish
     depends_on:
       - mysql
     working_dir: /var/www/html

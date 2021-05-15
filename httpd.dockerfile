@@ -9,10 +9,11 @@ RUN apt-get update && apt-get install -y \
     libjpeg62-turbo-dev \
     rsync \
     git \
-    libzip-dev
+    libzip-dev \
+    libfreetype6-dev
 
 RUN docker-php-ext-install pdo pdo_mysql mysqli zip
-RUN docker-php-ext-configure gd --with-jpeg
+RUN docker-php-ext-configure gd --with-jpeg --with-freetype
 RUN docker-php-ext-install gd
 
 RUN a2enmod rewrite

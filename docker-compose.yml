@@ -90,7 +90,7 @@ services:
       - 8081:80
 
   composer:
-    image: composer:2
+    image: composer:2.2
     container_name: composer
     volumes:
       - ./site:/var/www/html

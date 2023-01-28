@@ -90,7 +90,10 @@ services:
       - 8081:80
 
   composer:
-    image: composer:2.2
+    build:
+      context: .
+      dockerfile: php.dockerfile
+    entrypoint: ['/usr/bin/composer']
     container_name: composer
     volumes:
       - ./site:/var/www/html
@@ -101,7 +104,7 @@ services:
       - laravel
 
   npm:
-    image: node:17
+    image: node:19
     container_name: npm
     volumes:
       - ./site:/var/www/html

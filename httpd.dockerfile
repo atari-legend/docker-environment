@@ -7,13 +7,14 @@ RUN apt-get update && apt-get install -y \
     gnupg \
     libpng-dev \
     libjpeg62-turbo-dev \
+    libwebp-dev \
     rsync \
     git \
     libzip-dev \
     libfreetype6-dev
 
 RUN docker-php-ext-install pdo pdo_mysql mysqli zip
-RUN docker-php-ext-configure gd --with-jpeg --with-freetype
+RUN docker-php-ext-configure gd --with-jpeg --with-webp --with-freetype
 RUN docker-php-ext-install gd
 
 RUN a2enmod rewrite

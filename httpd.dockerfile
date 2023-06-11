@@ -22,6 +22,8 @@ RUN a2enmod expires
 RUN a2enmod headers
 RUN a2enmod deflate
 
+RUN echo "max_execution_time = 180" > $PHP_INI_DIR/conf.d/max_execution_time.ini
+
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf

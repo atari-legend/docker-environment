@@ -119,6 +119,8 @@ services:
     volumes:
       - ./site:/var/www/html
       # - /path/to/stonish/:/stonish
+      # HxC hxcfe binary needed to generate flux dumps track pictures
+      - ${HXCFE:-./hxcfe}:/hxcfe
     depends_on:
       - mysql
     working_dir: /var/www/html

@@ -23,6 +23,8 @@ RUN a2enmod headers
 RUN a2enmod deflate
 
 RUN echo "max_execution_time = 180" > $PHP_INI_DIR/conf.d/max_execution_time.ini
+RUN echo "upload_max_filesize = 16M" > $PHP_INI_DIR/conf.d/upload_max_filesize.ini
+RUN echo "post_max_size = 16M" > $PHP_INI_DIR/conf.d/post_max_size.ini
 
 ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 

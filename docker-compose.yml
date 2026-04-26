@@ -47,7 +47,7 @@ services:
     command: bash -c "npm install; npm rebuild node-sass; npm run grunt; npm run grunt -- watch"
 
   mysql:
-    image: mysql:5.7.44
+    image: mysql:9.7.0
     container_name: mysql
     tty: true
     ports:

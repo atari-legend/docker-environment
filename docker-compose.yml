@@ -102,7 +102,7 @@ services:
       - laravel
 
   npm:
-    image: node:22
+    image: node:24
     container_name: npm
     volumes:
       - ./site:/var/www/html

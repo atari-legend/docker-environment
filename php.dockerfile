@@ -1,6 +1,6 @@
 FROM php:8.5-fpm-alpine
 
-COPY --from=composer:2.9 /usr/bin/composer /usr/bin/composer
+COPY --from=composer:2.10 /usr/bin/composer /usr/bin/composer
 
 RUN apk update
 RUN apk add mysql-client libzip-dev libpng-dev

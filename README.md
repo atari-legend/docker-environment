@@ -32,9 +32,21 @@ define("FRONT_URL", "http://localhost:8080");
 
 ### Database connection
 
-Follow the instructions in each of the repository READMEs. The database server
-hostname is `mysql` and the database name and credentials can be found in the
-`docker-compose.yml` file.
+Follow the instructions in each of the repository READMEs. The database server is
+MariaDB 10.11, reachable as `db` on the Compose network, and the database name
+and credentials can be found in the `docker-compose.yml` file. The main site
+connects to it with Laravel's `mariadb` driver, so use `DB_HOST=db` and
+`DB_CONNECTION=mariadb` in `site/.env`.
+
+The `db` service has no volume: its data lives in the container layer and is
+lost whenever the container is recreated (`docker compose down`, an image
+change). Build an empty schema with
+
+```
+docker compose run --rm artisan migrate:fresh
+```
+
+and restore a dump into it for anything to look at.
 
 ## Usage
 

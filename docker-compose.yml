@@ -14,7 +14,7 @@ services:
     depends_on:
       - php
       - phpmyadmin
-      - mysql
+      - db
       - legacy
     networks:
       - laravel
@@ -46,21 +46,28 @@ services:
     working_dir: /app
     command: bash -c "npm install; npm rebuild node-sass; npm run grunt; npm run grunt -- watch"
 
-  mysql:
-    image: mysql:5.7.44
-    container_name: mysql
+  # Holds no volume: the database lives in the container layer and is gone as
+  # soon as the container is recreated (see the README).
+  db:
+    image: mariadb:10.11
+    container_name: db
     tty: true
     ports:
       - "3306:3306"
     volumes:
       - ./mysqld.cnf:/etc/mysql/conf.d/sql-mode.cnf
     environment:
-      MYSQL_DATABASE: atarilegend
-      MYSQL_USER: atarilegend
-      MYSQL_PASSWORD: atarilegend
-      MYSQL_ROOT_PASSWORD: atarilegend
+      MARIADB_DATABASE: atarilegend
+      MARIADB_USER: atarilegend
+      MARIADB_PASSWORD: atarilegend
+      MARIADB_ROOT_PASSWORD: atarilegend
       SERVICE_TAGS: dev
-      SERVICE_NAME: mysql
+      SERVICE_NAME: db
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - laravel
 
@@ -81,7 +88,7 @@ services:
     container_name: phpmyadmin
     environment:
       UPLOAD_LIMIT: 8M
-      PMA_HOST: mysql
+      PMA_HOST: db
     networks:
       - laravel
     ports:
@@ -124,7 +131,10 @@ services:
       # HxC hxcfe binary needed to generate flux dumps track pictures
       - ${HXCFE:-./hxcfe}:/hxcfe
     depends_on:
-      - mysql
+      # Artisan is how migrations are run, so wait for the server to actually
+      # accept connections rather than just for the container to exist.
+      db:
+        condition: service_healthy
     working_dir: /var/www/html
     entrypoint: ['php', '/var/www/html/artisan']
     networks:

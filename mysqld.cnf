@@ -1,8 +1,0 @@
-[mysqld]
-# Same as the server default, minus ONLY_FULL_GROUP_BY, which the legacy CPANEL
-# queries cannot satisfy. This governs the clients that do not choose their own
-# mode - CPANEL, phpMyAdmin, the CLI. The Laravel site is not one of them: it
-# sets a full strict session mode of its own, ONLY_FULL_GROUP_BY included.
-# NO_AUTO_CREATE_USER used to be listed here: it became a no-op after MySQL 5.7
-# and servers newer than this one refuse to start with it.
-sql-mode="STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION"

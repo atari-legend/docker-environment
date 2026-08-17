@@ -15,36 +15,8 @@ services:
       - php
       - phpmyadmin
       - db
-      - legacy
     networks:
       - laravel
-
-  legacy:
-    build: legacy/Docker/php
-    ports:
-      - "8082:80"
-    volumes:
-      - ./legacy/public:/var/www/html
-      - ./site/storage/app/public/images:/var/www/html/data/images
-      - ./site/storage/app/public/zips:/var/www/html/data/zips
-    depends_on:
-      - legacy-composer
-      - legacy-npm
-    networks:
-      - laravel
-
-  legacy-composer:
-    build: legacy/Docker/php
-    volumes:
-      - ./legacy/public/php:/php
-    command: bash -c "composer install -d /php"
-
-  legacy-npm:
-    build: legacy/Docker/php
-    volumes:
-      - ./legacy/:/app
-    working_dir: /app
-    command: bash -c "npm install; npm rebuild node-sass; npm run grunt; npm run grunt -- watch"
 
   # Holds no volume: the database lives in the container layer and is gone as
   # soon as the container is recreated (see the README).
@@ -54,8 +26,6 @@ services:
     tty: true
     ports:
       - "3306:3306"
-    volumes:
-      - ./mysqld.cnf:/etc/mysql/conf.d/sql-mode.cnf
     environment:
       MARIADB_DATABASE: atarilegend
       MARIADB_USER: atarilegend

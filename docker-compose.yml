@@ -21,7 +21,7 @@ services:
   # Holds no volume: the database lives in the container layer and is gone as
   # soon as the container is recreated (see the README).
   db:
-    image: mariadb:10.11
+    image: mariadb:12.3
     container_name: db
     tty: true
     ports:
